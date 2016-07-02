@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	before_action :find_post,only [:show, :edit, :ubdate]
+	before_action :find_post, only: [:show, :edit, :ubdate, :destroy]
   def index
   	@posts = Post.all.order ("created_at DESC")
  end
@@ -18,21 +18,30 @@ class PostsController < ApplicationController
    	end 
    end 
    def show 
-   	@post = Post.find (params [:id])
+   
    end 
    def edit 
-   	@post = Post.find(params[:id])
+   	
    end 
    def ubdate 
-   	@post = Post.find(params[:id])
+   
    	if @post = ubdate(post_params)
    		redirect_to @post 
    	else 
    		render "edit"
    	end
+   	def destroy 
+   		@post.destroy 
+   		redirect_to root_path 
+   	end 
    end 
 
 private 
+ 
+   def find_post 
+		@post = Post.find (params [:id])
+	end 
+
 def post_params 
 	params.require(:post).permit (:title, :body )
  end 
